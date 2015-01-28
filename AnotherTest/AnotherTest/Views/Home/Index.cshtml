@@ -1,0 +1,34 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        <form action="Home/AddQuote" method="POST">
+            <div>
+                <div>Please enter the author's name: </div>
+                <div><input type="text" name="Author" /></div>
+                
+                <div>Please enter your quote: </div>
+                <div><input type="text" name="Quote" /></div>
+                
+                <div>Please enter your mood or emotion: </div>
+                <div><input type="text" name="Emotion" /></div>
+                
+                <div>Please enter the source of the quote: </div>
+                <div><input type="text" name="Source" /></div>
+                
+                <input type="submit" value="Submit"/>
+            </div>
+        </form>
+        @ViewBag.Result
+    </div>
+</body>
+</html>
