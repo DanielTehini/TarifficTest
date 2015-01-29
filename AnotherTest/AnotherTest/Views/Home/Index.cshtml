@@ -51,19 +51,20 @@
                  
                   <div style="display:none;margin: 10px 0 10px 0" id="MoodSearch">
                     <div style="margin: 10px 0 10px 0"><input type="text" id="moodSearchText" placeholder="Enter mood to seach for"/></div>
-                      <button id="moodSearch">Search</button>
+                    
                            <div style="text-align:left;margin-top:20px" id="MoodSearchResults"></div>
                 </div>
                <div style="margin-top:20px"> <button id="searchQuotes">Search for quotes.</button></div>
               
                 <div style="display:none;margin: 10px 0 10px 0" id="QuoteSearch">
                     <div style="margin: 10px 0 10px 0"><input type="text" id="quoteSearchText" placeholder="Enter quote to search for"/></div>
-                    <button id="quoteSearch">Search</button>
+                   
                      <div style="text-align:left;margin-top:20px" id="QuoteResults"></div>
                 </div>
               
-           
-               
+            <div style="margin-top:20px"> 
+                <button id="MultiThread">Multithreading Strings</button>
+                </div>
             </div>
         </div>
     </div>
@@ -91,6 +92,68 @@
             $("#searchQuotes").on("click", function() {
                 $("#QuoteSearch").show();
             });
+
+            $("#MultiThread").on("click", function() {
+                window.location.href = "/home/multithreading";
+            });
+            $("#moodSearchText").on("keyup", function(e) {
+                if ($("#moodSearchText").val().length > 0) {
+                    var searchString = { "searchString": $("#moodSearchText").val() };
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/MoodSearch/SearchMood',
+                        data: JSON.stringify(searchString),
+                        contentType: 'application/json; charset=utf-8',
+                        async: false,
+                        success: function (data) {
+                            var result = $.parseJSON(data);
+                            $("#MoodSearchResults").empty();
+                            if (result.length > 0) {
+                                $("#MoodSearchResults").append("Mood : Quote");
+                                for (var key in result) {
+                                    $("#MoodSearchResults").append("<div style='text-align: left;margin: 10px 0 10px 0'>" + result[key].Emotion + " : " + result[key].Quote + "</div>");
+                                }
+                            } else {
+                                $("#MoodSearchResults").empty().append("No quotes match that emotion or mood. Please try another one.");
+                            }
+                            
+
+                        }
+                    });
+                } else {
+                    $("#MoodSearchResults").empty().append("Please enter at least 1 characters for the search to work.");
+                }
+            });
+            
+            $("#quoteSearchText").on("keyup", function (e) {
+                if ($("#quoteSearchText").val().length > 0) {
+                    var searchString = { "searchString": $("#quoteSearchText").val() };
+                    $.ajax({
+                        type: 'POST',
+                        url: '/api/QuoteSearch/SearchQuote',
+                        data: JSON.stringify(searchString),
+                        contentType: 'application/json; charset=utf-8',
+                        async: false,
+                        success: function (data) {
+                            var result = $.parseJSON(data);
+                            $("#QuoteResults").empty();
+                            if (result.length > 0) {
+                                $("#QuoteResults").append("Quotes");
+                                for (var key in result) {
+                                    $("#QuoteResults").append("<div style='text-align: left;margin: 10px 0 10px 0'>" + result[key].Quote + "</div>");
+                                }
+                            } else {
+                                $("#QuoteResults").empty().append("No quotes match that word or sentence. Please try another one.");
+                            }
+
+
+                        }
+                    });
+                } else {
+                    $("#QuoteResults").empty().append("Please enter at least 1 characters for the search to work.");
+                }
+            });
+
         })
     </script>
 </body>

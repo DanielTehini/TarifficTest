@@ -18,6 +18,11 @@ namespace AnotherTest.Controllers
             return View();
         }
 
+        public ActionResult MultiThreading()
+        {
+            return View();
+        }
+
         public RedirectToRouteResult AddQuote(string quote, string author, string emotion, string source)
         {
             try
