@@ -1,5 +1,10 @@
 ﻿@{
     Layout = null;
+    List<string> quotes = new List<string>();
+    if (TempData["TransformedQuotes"] != null)
+    {
+        quotes = (List<string>)TempData["TransformedQuotes"];
+    }
 }
 
 <!DOCTYPE html>
@@ -11,7 +16,13 @@
 </head>
 <body>
     <div>
-        
+        @if (TempData["TransformedQuotes"] != null)
+        {
+            foreach (string s in quotes)
+            {
+                <div>@s</div>
+            }
+        }
     </div>
 </body>
 </html>

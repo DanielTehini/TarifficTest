@@ -29,7 +29,16 @@ namespace AnotherTest.Models
                 string currentWord = getSplitWords[i];
                 if (currentWord.Length > 2)
                 {
-                    currentWord = char.ToUpper(currentWord[0]) + currentWord.Substring(1, currentWord.Length - 2) + char.ToUpper(getSplitWords[i][getSplitWords[i].Length - 1]);
+                    string sPattern = "[a-zA-Z]";
+                    bool isCharacter = System.Text.RegularExpressions.Regex.IsMatch(getSplitWords[i][getSplitWords[i].Length - 1].ToString(), sPattern, System.Text.RegularExpressions.RegexOptions.IgnoreCase);
+                    if (isCharacter)
+                    {
+                        currentWord = char.ToUpper(currentWord[0]) + currentWord.Substring(1, currentWord.Length - 2) + char.ToUpper(getSplitWords[i][getSplitWords[i].Length - 1]);
+                    }
+                    else
+                    {
+                        currentWord = char.ToUpper(currentWord[0]) + currentWord.Substring(1, currentWord.Length - 3) + char.ToUpper(getSplitWords[i][getSplitWords[i].Length - 2]) + getSplitWords[i][getSplitWords[i].Length - 1];
+                    }
                 }
                 else
                 {

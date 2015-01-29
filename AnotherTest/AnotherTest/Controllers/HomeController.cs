@@ -6,22 +6,22 @@ using System.Web.Mvc;
 
 namespace AnotherTest.Controllers
 {
+    using System.Threading;
+
     using AnotherTest.Models;
 
     using Twitterizer;
 
     public class HomeController : Controller
     {
+        List<string> transformedStrings = new List<string>();
 
         public ActionResult Index()
         {
             return View();
         }
 
-        public ActionResult MultiThreading()
-        {
-            return View();
-        }
+       
 
         public RedirectToRouteResult AddQuote(string quote, string author, string emotion, string source)
         {
@@ -59,6 +59,37 @@ namespace AnotherTest.Controllers
                 return this.RedirectToAction("Index");
             }
             
-        }       
+        }
+
+        public ActionResult MultiThreading()
+        {
+            try
+            {
+                using (var context = new QuotesDB())
+                {
+                    
+                    List<UserQuote> getAllQuotes = context.Quotes.ToList();
+                    foreach (UserQuote userQuote in getAllQuotes)
+                    {
+                        Thread workerThread = new Thread(() => SomeDelegate(userQuote));
+                        workerThread.Start();
+                    }
+
+                    TempData["TransformedQuotes"] = transformedStrings;
+                    return View();
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["TransformedQuotes"] = null;
+                return View();
+            }                   
+        }
+
+        public void SomeDelegate(UserQuote userQuote)
+        {
+            transformedStrings.Add(userQuote.ToString());
+        }
+
     }
 }
