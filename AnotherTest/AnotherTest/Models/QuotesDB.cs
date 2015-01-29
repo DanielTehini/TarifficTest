@@ -14,7 +14,7 @@ namespace AnotherTest.Models
         {
         }
 
-        public DbSet<UserQuotes> Quotes { get; set; }
+        public DbSet<UserQuote> Quotes { get; set; }
     }
    
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-
-namespace AnotherTest.Migrations
+﻿namespace AnotherTest.Migrations
 {
     using System;
     using System.Data.Entity;
@@ -34,4 +29,3 @@ namespace AnotherTest.Migrations
         }
     }
 }
-

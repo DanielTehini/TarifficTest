@@ -28,3 +28,7 @@ C:\AnotherTest\AnotherTest\AnotherTest\bin\System.Web.WebPages.Deployment.xml
 C:\AnotherTest\AnotherTest\AnotherTest\bin\System.Web.WebPages.Razor.xml
 C:\AnotherTest\AnotherTest\AnotherTest\obj\Debug\AnotherTest.dll
 C:\AnotherTest\AnotherTest\AnotherTest\obj\Debug\AnotherTest.pdb
+C:\AnotherTest\AnotherTest\AnotherTest\bin\Twitterizer2.Asynchronous.dll
+C:\AnotherTest\AnotherTest\AnotherTest\bin\Twitterizer2.dll
+C:\AnotherTest\AnotherTest\AnotherTest\bin\Twitterizer2.Streaming.dll
+C:\AnotherTest\AnotherTest\AnotherTest\obj\Debug\AnotherTest.csprojResolveAssemblyReference.cache

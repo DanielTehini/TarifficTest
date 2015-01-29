@@ -8,27 +8,51 @@
 <head>
     <meta name="viewport" content="width=device-width" />
     <title>Index</title>
+    <script src="~/Scripts/jquery-2.1.1.js"></script>
 </head>
 <body>
-    <div>
+    <div style="position:relative">
         <form action="Home/AddQuote" method="POST">
             <div>
                 <div>Please enter the author's name: </div>
-                <div><input type="text" name="Author" /></div>
+                <div><input type="text" name="Author" required /></div>
                 
                 <div>Please enter your quote: </div>
-                <div><input type="text" name="Quote" /></div>
+                <div><input type="text" name="Quote" required /></div>
                 
                 <div>Please enter your mood or emotion: </div>
-                <div><input type="text" name="Emotion" /></div>
+                <div><input type="text" name="Emotion" required /></div>
                 
                 <div>Please enter the source of the quote: </div>
-                <div><input type="text" name="Source" /></div>
+                <div><input type="text" name="Source" required  /></div>
                 
                 <input type="submit" value="Submit"/>
             </div>
         </form>
         @ViewBag.Result
+        
+        <button id="viewMoods">View amount of quotes per mood.</button>
+        <div id="MoodResults"></div>
     </div>
+    <script>
+        $(document).ready(function() {
+            $("#viewMoods").on("click", function() {
+                $.ajax({
+                    type: 'GET',
+                    url: '/api/MoodCount/QuotesPerMood',                  
+                    async: true,                                
+                    success: function (data) {
+                        var result = $.parseJSON(data);
+                        $("#MoodResults").empty();
+                        $("#MoodResults").append("Mood : Number of Quotes");
+                        for (var key in result) {
+                            $("#MoodResults").append("<div>" + key + " : " + result[key] + "</div>");
+                        }
+                     
+                    }
+                });
+            })
+        })
+    </script>
 </body>
 </html>
