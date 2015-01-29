@@ -18,7 +18,7 @@ namespace AnotherTest.Controllers
             return View();
         }
 
-        public ActionResult AddQuote(string quote, string author, string emotion, string source)
+        public RedirectToRouteResult AddQuote(string quote, string author, string emotion, string source)
         {
             try
             {
@@ -44,14 +44,14 @@ namespace AnotherTest.Controllers
                     TwitterResponse<TwitterStatus> response = TwitterStatus.Update(
                         accesstoken,
                         quote);
-                    ViewBag.Result = "Your quote has been added to the database.";
-                    return View("Index");
+                    TempData["Result"] = "Your quote has been added to the database.";
+                    return this.RedirectToAction("Index");
                 }
             }
             catch (Exception ex)
             {
-                ViewBag.Result = "An error has occured, please contact the system administrator.";
-                return View("Index");
+                TempData["Result"] = "An error has occured, please contact the system administrator.";
+                return this.RedirectToAction("Index");
             }
             
         }       

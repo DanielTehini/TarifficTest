@@ -1,5 +1,6 @@
 ﻿@{
     Layout = null;
+    
 }
 
 <!DOCTYPE html>
@@ -11,47 +12,85 @@
     <script src="~/Scripts/jquery-2.1.1.js"></script>
 </head>
 <body>
-    <div style="position:relative">
-        <form action="Home/AddQuote" method="POST">
-            <div>
-                <div>Please enter the author's name: </div>
-                <div><input type="text" name="Author" required /></div>
-                
-                <div>Please enter your quote: </div>
-                <div><input type="text" name="Quote" required /></div>
-                
-                <div>Please enter your mood or emotion: </div>
-                <div><input type="text" name="Emotion" required /></div>
-                
-                <div>Please enter the source of the quote: </div>
-                <div><input type="text" name="Source" required  /></div>
-                
-                <input type="submit" value="Submit"/>
-            </div>
-        </form>
-        @ViewBag.Result
+    <div style="position: relative">
         
-        <button id="viewMoods">View amount of quotes per mood.</button>
-        <div id="MoodResults"></div>
+        <div style="position: relative; margin: 0 auto; display: block; width: 30%; text-align: center; padding-right:40px">
+         @*   <h1>Tarrific Dev Test</h1>*@
+            <form action="~/Home/AddQuote" method="POST">
+                <div >
+                    <div>Please enter the author's name: </div>
+                    <div style="margin-bottom: 20px">
+                        <input type="text" name="Author" required /></div>
+
+                    <div>Please enter your quote: </div>
+                    <div style="margin-bottom: 20px">
+                        <input type="text" name="Quote" required /></div>
+
+                    <div>Please enter your mood or emotion: </div>
+                    <div style="margin-bottom: 20px">
+                        <input type="text" name="Emotion" required /></div>
+
+                    <div>Please enter the source of the quote: </div>
+                    <div style="margin-bottom: 20px">
+                        <input type="text" name="Source" required /></div>
+
+                    <input type="submit" value="Submit" />
+                </div>
+            </form>
+            <div style="margin-top:20px">@TempData["Result"] </div>
+            @if (TempData["Result"] != null)
+            {
+                 <div style="margin-top:20px">You can view your quote on Twitter by following this link: <a target="_blank" href='https://twitter.com/TestMctests'>Click Me</a></div>
+            }
+            <div style="margin-top:20px">
+                <div>
+                    <button id="viewMoods">View amount of quotes per mood.</button>
+                     <div style="text-align:left;margin-top:20px" id="MoodResults"></div>
+                    </div>
+                <div style="margin-top:20px"><button id="searchMoods">Search for moods.</button></div>
+                 
+                  <div style="display:none;margin: 10px 0 10px 0" id="MoodSearch">
+                    <div style="margin: 10px 0 10px 0"><input type="text" id="moodSearchText" placeholder="Enter mood to seach for"/></div>
+                      <button id="moodSearch">Search</button>
+                           <div style="text-align:left;margin-top:20px" id="MoodSearchResults"></div>
+                </div>
+               <div style="margin-top:20px"> <button id="searchQuotes">Search for quotes.</button></div>
+              
+                <div style="display:none;margin: 10px 0 10px 0" id="QuoteSearch">
+                    <div style="margin: 10px 0 10px 0"><input type="text" id="quoteSearchText" placeholder="Enter quote to search for"/></div>
+                    <button id="quoteSearch">Search</button>
+                     <div style="text-align:left;margin-top:20px" id="QuoteResults"></div>
+                </div>
+              
+           
+               
+            </div>
+        </div>
     </div>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#viewMoods").on("click", function() {
                 $.ajax({
                     type: 'GET',
-                    url: '/api/MoodCount/QuotesPerMood',                  
-                    async: true,                                
-                    success: function (data) {
+                    url: '/api/MoodCount/QuotesPerMood',
+                    async: true,
+                    success: function(data) {
                         var result = $.parseJSON(data);
                         $("#MoodResults").empty();
                         $("#MoodResults").append("Mood : Number of Quotes");
                         for (var key in result) {
-                            $("#MoodResults").append("<div>" + key + " : " + result[key] + "</div>");
+                            $("#MoodResults").append("<div style='text-align: left;margin: 10px 0 10px 0'>" + key + " : " + result[key] + "</div>");
                         }
-                     
+
                     }
                 });
-            })
+            });
+            $("#searchMoods").on("click", function() {
+                $("#MoodSearch").show();
+            });
+            $("#searchQuotes").on("click", function() {
+                $("#QuoteSearch").show();
+            });
         })
     </script>
 </body>
